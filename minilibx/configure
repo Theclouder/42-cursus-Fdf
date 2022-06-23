@@ -42,6 +42,7 @@ for inc in \
                               \
     /usr/openwin/include      \
     /usr/openwin/share/include
+
  do
 	if [ -f "$inc/X11/Xlib.h" -a -f "$inc/X11/extensions/XShm.h" ]; then
 		conf_inc=$inc

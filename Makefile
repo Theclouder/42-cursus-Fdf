@@ -6,31 +6,33 @@
 #    By: vduchi <vduchi@student.42barcelon>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/22 22:11:19 by vduchi            #+#    #+#              #
-#    Updated: 2022/06/19 12:17:14 by vduchi           ###   ########.fr        #
+#    Updated: 2022/06/23 18:12:23 by vduchi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = 		fdf
-HEAD = 		fdf.h
-LIBFT = 	libft.a
-SRCSDIR =	src
-OBJDIR =	obj
-DIRS =		include/ libft/
+NAME 		=	fdf
+HEAD 		=	fdf.h
+LIBFT 		=	libft.a
+SRCSDIR		=	src
+OBJDIR		=	obj
+DIRS		=	include/ libft/
 
-SRCS = 		src/main.c	src/read_file.c
-OBJS := $(patsubst $(SRCSDIR)/%,$(OBJDIR)/%,$(SRCS:.c=.o))
-#OBJS_LIB = ./libft/*.o
+SRCS		= 	src/main.c	src/read_file.c
+OBJS		= 	$(patsubst $(SRCSDIR)/%,$(OBJDIR)/%,$(SRCS:.c=.o))
 
-CFLAGS += 	-Wall -Wextra -Werror $(addprefix -I , $(DIRS))
-LDFLAGS = 	-L/ -lft
+CFLAGS		+= 	-Wall -Wextra -Werror $(addprefix -I , $(DIRS))
+LDFLAGS		= 	-L/ -lft
+MLX			=	-L. -lmlx -framework OpenGL -framework AppKit
 
 $(OBJDIR)/%.o : $(SRCSDIR)/%.c
-	cc $(CFLAGS) -c $< -o $@
+	cc $(CFLAGS) -I./minilibx -c $< -o $@
 
 all:		$(NAME)
 
-$(NAME): 	$(OBJDIR) $(LIBFT) $(OBJS)
-	gcc $(OBJS) $(LIBFT) -o $@
+$(NAME): 	$(OBJDIR) $(OBJS)
+	make -C ./minilibx all
+	cp minilibx/libmlx.a .
+	gcc $(OBJS) $(MLX) -o $@
 	@echo "Library created!"
 
 $(LIBFT):
